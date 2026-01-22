@@ -1,3 +1,4 @@
+from jokes import pick_joke
 import discord
 from dotenv import load_dotenv
 from discord.ext import commands
@@ -27,5 +28,12 @@ async def on_member_join(member: discord.member.Member):
         channel = discord.utils.get(member.guild.text_channels, name="general")
         if channel:
             await channel.send(f"Yo {member.mention}")
+
+@bot.command()
+async def joke(ctx):
+    joke, punchline = pick_joke()
+    await ctx.send(f"{ctx.author.mention} {joke}")
+    await ctx.send(punchline)
+
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
